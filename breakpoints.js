@@ -7,6 +7,16 @@ window.Breakpoints = (function (window, document) {
 	resizingTimeout = 200,
 	breakpoints = [],
 
+	// Credits to: http://stackoverflow.com/questions/5916900/detect-version-of-browser/5918791#5918791
+	browser = (function(n){
+	    var N = n.appName, ua = n.userAgent, tem,
+		    M = ua.match(/(opera|chrome|safari|firefox|msie)\/?\s*(\.?\d+(\.\d+)*)/i);
+	    if(M && (tem = ua.match(/version\/([\.\d]+)/i)) != null) M[2] = tem[1];
+	    M = M ? [M[1], M[2]] : [N, n.appVersion, '-?'];
+	    M = {indentity: M[0], version: M[1]};
+	    return M;
+	})(navigator),
+
 	debounce = function (func, wait, immediate) {
 		var timeout, result;
 		return function() {
@@ -63,7 +73,17 @@ window.Breakpoints = (function (window, document) {
 	B.isMatched = function(breakpoint) {
 		breakpoint.el = breakpoint.el || document.body;
 
-		var content = window.getComputedStyle(breakpoint.el, ':after').getPropertyValue('content');
+		var content;
+
+		// TODO: add support for other browsers
+
+		// Safari <= 5
+		if (breakpoint.fallbackEl && browser.indentity == 'Safari' && parseInt(browser.version) <= 5) {
+			content = window.getComputedStyle(breakpoint.fallbackEl,null).getPropertyValue('font-family');
+		} else {
+			content = window.getComputedStyle(breakpoint.el, ':after').getPropertyValue('content');
+		}
+
 		content = removeDoubleQuotes(content)
 		return breakpoint.name === content;
 	};

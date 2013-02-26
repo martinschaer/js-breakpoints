@@ -20,6 +20,10 @@
         div {
           background-color: yellow;
         }
+        #jsbreakpoints {
+          font-family: "BIG_SCREEN_BREAKPOINT";
+          display: none;
+        }
         body:after {
     			display:none;
     			content: "BIG_SCREEN_BREAKPOINT";
@@ -31,6 +35,7 @@
 <body>
   <p>Test by resizing the width of the browser over & under 600px. </p>
   <div id="test">Loading</div>
+  <div id="jsbreakpoints"></div>
 
   <script src="breakpoints.js" ></script>
 	<script>
@@ -39,6 +44,7 @@
 
 		var b = Breakpoints.on({
 			name: "BIG_SCREEN_BREAKPOINT",
+      fallbackEl: document.getElementById('jsbreakpoints'),
 			el: document.body,
 			matched: function() {
         testEl.textContent = "Breakpoint is matched";
