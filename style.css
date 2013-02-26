@@ -1,0 +1,24 @@
+body {
+  font-family: sans-serif;
+  font-size: 22px;
+}
+
+div {
+  background-color: hotpink;
+}
+
+@media screen and (min-width: 600px) {
+
+  div {
+    background-color: yellow;
+  }
+  #jsbreakpoints {
+    font-family: "BIG_SCREEN_BREAKPOINT";
+    display: none;
+  }
+  body:after {
+    display:none;
+    content: "BIG_SCREEN_BREAKPOINT";
+  }
+
+}

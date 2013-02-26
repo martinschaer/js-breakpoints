@@ -4,39 +4,14 @@
   	<meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
     <title>Javascript Breakpoints demo page</title>
-    <style>
-
-      body {
-        font-family: sans-serif;
-        font-size: 22px;
-      }
-
-      div {
-        background-color: hotpink;
-      }
-
-      @media screen and (min-width: 600px) {
-
-        div {
-          background-color: yellow;
-        }
-        #jsbreakpoints {
-          font-family: "BIG_SCREEN_BREAKPOINT";
-          display: none;
-        }
-        body:after {
-    			display:none;
-    			content: "BIG_SCREEN_BREAKPOINT";
-        }
-
-      }
-    </style>
+    <link href="style.css" rel="stylesheet"/>
   </head>
 <body>
   <p>Test by resizing the width of the browser over & under 600px. </p>
   <div id="test">Loading</div>
   <div id="jsbreakpoints"></div>
 
+  <!--[if lte IE 8]><script src="respond.min.js"></script><![endif]-->
   <script src="breakpoints.js" ></script>
 	<script>
 

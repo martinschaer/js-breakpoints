@@ -136,9 +136,9 @@ Provides a way to check if a breakpoint is entered without firing any events.  R
 
 ## Browser support
 
-Works on all modern browsers.  Or to be more specific,  all browsers that support computedStyle for pseudo elements: http://caniuse.com/#feat=getcomputedstyle
+###To support Safari 5 and older...
 
-To support Safari 5 and older, include fallbackEl to the Breakpoints' options and add the corresponding element to the markup:
+Add a dummy DOM element as fallbackEl to the Breakpoints' options, and add the corresponding element to the markup. Example:
 
 ```js
 Breakpoints.on({
@@ -157,16 +157,20 @@ Breakpoints.on({
 @media screen and (min-width: 600px) {
 
 	#jsbreakpoints {
-	  font-family: "BIG_SCREEN_BREAKPOINT";
-	  display: none;
+		font-family: "BIG_SCREEN_BREAKPOINT";
+		display: none;
 	}
 	body:after {
-			display:none;
-			content: "BIG_SCREEN_BREAKPOINT";
+		display:none;
+		content: "BIG_SCREEN_BREAKPOINT";
 	}
 
 }
 ```
+
+###To support IE 8 and older...
+
+Include [response.js](https://github.com/ryanve/response.js), and define fallbackEl in the options as above. Response.js adds basic Media Query capabilities to IE. You can also write IE-only CSS rules to add the breakpoint without using media queries at all, thus forcing the breakpoint for IE.
 
 ## Contributors
 

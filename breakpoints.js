@@ -75,14 +75,35 @@ window.Breakpoints = (function (window, document) {
 
 		var content;
 
-		// TODO: add support for other browsers
-
 		// Safari <= 5
 		if (breakpoint.fallbackEl && browser.indentity == 'Safari' && parseInt(browser.version) <= 5) {
 			content = window.getComputedStyle(breakpoint.fallbackEl,null).getPropertyValue('font-family');
-		} else {
+		}
+		// Modern browsers
+		else if (window.getComputedStyle) {
 			content = window.getComputedStyle(breakpoint.el, ':after').getPropertyValue('content');
 		}
+		// Old IE
+		else if (breakpoint.fallbackEl) {
+			window.getCompStyle = function(el, pseudo) {
+				this.el = el;
+				this.getPropertyValue = function(prop) {
+					var re = /(\-([a-z]){1})/g;
+					if (prop == 'float') prop = 'styleFloat';
+					if (re.test(prop)) {
+						prop = prop.replace(re, function () {
+							return arguments[2].toUpperCase();
+						});
+					}
+					return el.currentStyle[prop] ? el.currentStyle[prop] : null;
+				}
+				return this;
+			};
+			content = window.getCompStyle(breakpoint.fallbackEl,'').getPropertyValue('font-family');
+			alert(content);
+		}
+		// no support
+		else { return false; }
 
 		content = removeDoubleQuotes(content)
 		return breakpoint.name === content;
