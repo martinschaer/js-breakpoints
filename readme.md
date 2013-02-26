@@ -138,6 +138,35 @@ Provides a way to check if a breakpoint is entered without firing any events.  R
 
 Works on all modern browsers.  Or to be more specific,  all browsers that support computedStyle for pseudo elements: http://caniuse.com/#feat=getcomputedstyle
 
+To support Safari 5 and older, include fallbackEl to the Breakpoints' options and add the corresponding element to the markup:
+
+```js
+Breakpoints.on({
+	name: "BIG_SCREEN_BREAKPOINT",
+	matched: onMatch,
+	fallbackEl: document.getElementById('jsbreakpoints')
+	exit: onExit
+});
+```
+
+```html
+<div id="jsbreakpoints"></div>
+```
+
+```css
+@media screen and (min-width: 600px) {
+
+	#jsbreakpoints {
+	  font-family: "BIG_SCREEN_BREAKPOINT";
+	  display: none;
+	}
+	body:after {
+			display:none;
+			content: "BIG_SCREEN_BREAKPOINT";
+	}
+
+}
+```
 
 ## Contributors
 
